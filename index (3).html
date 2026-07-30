@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jour J — le mémo du couple</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D1117;
+    --surf:#161C25;
+    --surf2:#1D2531;
+    --line:#2A3441;
+    --line2:#3A4759;
+    --text:#E8EDF3;
+    --muted:#8A97A8;
+    --dim:#5D6B7D;
+    --ac:#8AB4F8;
+    --alert:#F2705A;
+    --r:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--ink);color:var(--text);
+    font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:16px;line-height:1.5;padding-bottom:56px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:600px;margin:0 auto;padding:0 16px}
+
+  /* ============ header ============ */
+  .top{position:sticky;top:0;z-index:30;background:rgba(13,17,23,.95);
+       backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+       padding-top:env(safe-area-inset-top)}
+  .brand{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:11px 0 9px}
+  .brand h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:17px;letter-spacing:-.03em}
+  .brand span{font-family:"Space Mono",monospace;font-size:9.5px;color:var(--dim);letter-spacing:.16em;text-transform:uppercase}
+
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;appearance:none;cursor:pointer;white-space:nowrap;
+       border:1px solid var(--line);background:var(--surf);color:var(--muted);
+       border-radius:999px;padding:9px 15px;
+       font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:13.5px;letter-spacing:-.01em;
+       transition:background .15s,color .15s,border-color .15s}
+  .tab:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+  .tab[aria-selected="true"]{color:var(--ink);border-color:transparent;background:var(--tc)}
+  #t1{--tc:#8AB4F8} #t2{--tc:#B98CE8} #t3{--tc:#5FD49A} #t4{--tc:#F0B429} #t5{--tc:#F2705A} #t6{--tc:#7FD7E8}
+
+  /* ============ panels ============ */
+  .panel{display:none;padding-top:22px}
+  .panel.on{display:block;animation:in .2s ease}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  #p1{--ac:#8AB4F8} #p2{--ac:#B98CE8} #p3{--ac:#5FD49A} #p4{--ac:#F0B429} #p5{--ac:#F2705A} #p6{--ac:#7FD7E8}
+
+  .eyebrow{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.18em;
+           text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+  .title{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:31px;
+         line-height:1.03;letter-spacing:-.04em;color:var(--ac)}
+  .lede{color:var(--muted);font-size:15px;margin-top:9px}
+  .lede b{color:var(--text);font-weight:600}
+
+  h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:15px;
+     letter-spacing:-.015em;margin:0 0 10px;display:flex;align-items:center;gap:9px}
+  h3::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--ac);flex:0 0 auto}
+  .sec{margin-top:28px;border-top:1px solid var(--line);padding-top:22px}
+  .sec:first-of-type{border-top:0}
+
+  .sub{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.16em;
+       text-transform:uppercase;color:var(--dim);margin:22px 0 8px}
+
+  /* ============ breath trace cards ============ */
+  .breath{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);
+          padding:15px;margin-bottom:10px}
+  .breath-hd{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:3px}
+  .breath-hd h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:15.5px;letter-spacing:-.015em}
+  .breath-when{font-family:"Space Mono",monospace;font-size:10px;color:var(--ac);
+               letter-spacing:.1em;text-transform:uppercase;text-align:right;flex:0 0 auto;max-width:44%}
+  .breath p{font-size:14px;color:var(--muted);margin-bottom:11px}
+  .breath p b{color:var(--text);font-weight:600}
+  .breath svg{width:100%;height:auto;display:block}
+
+  .bl{stroke:var(--line2);stroke-width:1;stroke-dasharray:2 4}
+  .tr{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+  .tl{font-family:"Space Mono",monospace;font-size:9px;fill:var(--dim);letter-spacing:.06em}
+  .tl.hi{fill:var(--text)}
+
+  /* ============ legend ============ */
+  .legend{background:var(--surf2);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px}
+  .legend h5{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.16em;
+             text-transform:uppercase;color:var(--dim);margin-bottom:11px}
+  .lg-row{display:flex;align-items:center;gap:12px;padding:5px 0;font-size:13.5px;color:var(--muted)}
+  .lg-row svg{flex:0 0 auto}
+  .lg-row b{color:var(--text);font-weight:600}
+
+  /* ============ steps ============ */
+  ol.steps{list-style:none;counter-reset:s}
+  ol.steps li{counter-increment:s;position:relative;padding:12px 0 12px 44px;border-bottom:1px solid var(--line)}
+  ol.steps li:last-child{border-bottom:0}
+  ol.steps li::before{content:"0" counter(s);position:absolute;left:0;top:12px;
+    font-family:"Space Mono",monospace;font-size:11.5px;color:var(--ac)}
+  ol.steps b{font-weight:600}
+  ol.steps em{display:block;font-style:normal;color:var(--muted);font-size:14px;margin-top:2px}
+
+  /* ============ plain lists ============ */
+  ul.plain{list-style:none}
+  ul.plain li{padding:11px 0 11px 20px;border-bottom:1px solid var(--line);position:relative;font-size:15px}
+  ul.plain li:last-child{border-bottom:0}
+  ul.plain li::before{content:"";position:absolute;left:0;top:19px;width:8px;height:1.5px;background:var(--line2)}
+  ul.plain li b{font-weight:600}
+  ul.plain li span{color:var(--muted)}
+  ul.rules li::before{background:var(--ac);width:7px;height:7px;border-radius:50%;top:16px}
+
+  sup.x{font-family:"Space Mono",monospace;font-size:9px;color:var(--dim);
+        border:1px solid var(--line2);border-radius:3px;padding:0 3px;margin-left:4px;vertical-align:2px}
+
+  /* ============ exercise cards ============ */
+  .ex{display:grid;gap:10px}
+  .ex-card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);
+           padding:14px;display:grid;grid-template-columns:70px 1fr;gap:14px;align-items:center}
+  .ex-card svg{width:70px;height:auto}
+  .ex-card h4{font-family:"Bricolage Grotesque",sans-serif;font-size:14.5px;font-weight:700;margin-bottom:3px}
+  .ex-card p{font-size:13.5px;color:var(--muted);line-height:1.45}
+  .ex-card p b{color:var(--text);font-weight:600}
+  .fig{fill:none;stroke:#5A6A7E;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ---- grands schémas de position ---- */
+  .pos{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);
+       padding:14px 14px 8px;margin-bottom:10px}
+  .pos svg{width:100%;height:auto;display:block}
+  .pos h4{font-family:"Bricolage Grotesque",sans-serif;font-size:16.5px;font-weight:700;
+          letter-spacing:-.02em;margin:12px 0 3px}
+  .pos .why{font-size:13.5px;color:var(--dim);margin-bottom:2px}
+  .figm{fill:none;stroke:#93A6BC;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+  .figm-f{fill:#93A6BC}
+  .figp{fill:none;stroke:var(--ac,#8AB4F8);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+  .figp-f{fill:var(--ac,#8AB4F8)}
+  .bed{fill:none;stroke:var(--line2);stroke-width:3;stroke-linecap:round}
+  .gd{fill:none;stroke:var(--line2);stroke-width:2;stroke-dasharray:3 4}
+  .ar{fill:none;stroke:var(--ac,#8AB4F8);stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+  .no{stroke:#F2705A} .ok{stroke:#5FD49A}
+  .no-f{fill:#F2705A} .ok-f{fill:#5FD49A}
+  .mk{fill:var(--ac,#8AB4F8)}
+  .mk-t{fill:#0E1218;font-family:"Space Mono",monospace;font-size:13px;font-weight:700;text-anchor:middle}
+  .cap{font-family:"Bricolage Grotesque",sans-serif;font-size:12px;font-weight:700;
+       letter-spacing:.04em;text-anchor:middle}
+  ol.numlist{list-style:none;counter-reset:lg;margin:6px 0 8px}
+  ol.numlist li{counter-increment:lg;position:relative;padding:9px 0 9px 33px;
+               font-size:14.5px;line-height:1.45;border-bottom:1px solid var(--line)}
+  ol.numlist li:last-child{border-bottom:0}
+  ol.numlist li::before{content:counter(lg);position:absolute;left:0;top:9px;
+        width:22px;height:22px;border-radius:50%;background:var(--ac,#8AB4F8);color:var(--ink);
+        font-family:"Space Mono",monospace;font-size:11.5px;font-weight:700;
+        text-align:center;line-height:22px}
+  ol.numlist li b{font-weight:600;color:var(--text)}
+  .arw{fill:none;stroke:var(--ac);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ============ chips + notes ============ */
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+  .chip{font-family:"Space Mono",monospace;font-size:11px;background:var(--surf2);
+        border:1px solid var(--line);border-radius:999px;padding:6px 11px}
+  .note{border-left:3px solid var(--line2);padding:3px 0 3px 14px;margin-top:16px;color:var(--muted);font-size:14.5px}
+  .note strong{color:var(--text);font-weight:600}
+  .alert{background:rgba(242,112,90,.09);border:1px solid rgba(242,112,90,.4);
+         border-radius:var(--r);padding:14px 15px;margin-top:14px}
+  .alert h5{font-family:"Bricolage Grotesque",sans-serif;font-size:14px;font-weight:700;color:var(--alert);margin-bottom:8px}
+  .alert ul{list-style:none}
+  .alert li{font-size:14.5px;padding:5px 0;display:flex;gap:10px;align-items:flex-start}
+  .alert li i{font-style:normal;flex:0 0 12px;height:12px;border-radius:3px;margin-top:5px}
+  .alert li b{font-weight:600}
+
+  /* ============ pacer ============ */
+  .pacer{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);
+         padding:18px 14px 15px;text-align:center;margin-bottom:10px}
+  .pacer svg{width:100%;max-width:172px;height:auto}
+  .pc-track{fill:none;stroke:var(--line2);stroke-width:3}
+  .pc-edge{fill:none;stroke:var(--ac,#B98CE8);stroke-width:5;stroke-linecap:round;opacity:0}
+  .pc-edge.live{opacity:1}
+  .pc-dot{fill:var(--ac,#B98CE8)}
+  .pc-lung{fill:var(--ac,#B98CE8);opacity:.16;stroke:var(--ac,#B98CE8);stroke-width:1.5}
+  .pc-phase{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:23px;
+            letter-spacing:-.025em;margin-top:8px;min-height:29px}
+  .pc-count{font-family:"Space Mono",monospace;font-size:12px;color:var(--muted);min-height:18px}
+  .pc-btn{margin-top:13px;appearance:none;cursor:pointer;background:var(--ac);color:var(--ink);
+          border:0;border-radius:999px;padding:11px 28px;
+          font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:14px}
+  .pc-btn:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+
+  /* ============ split (repos / avancer) ============ */
+  .split{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:6px}
+  .split-hd{padding:13px 15px;background:var(--surf2);display:flex;align-items:center;gap:11px}
+  .split-hd b{font-family:"Bricolage Grotesque",sans-serif;font-size:15px;font-weight:700}
+  .split-hd span{font-family:"Space Mono",monospace;font-size:10px;color:var(--dim);
+                 letter-spacing:.12em;text-transform:uppercase;margin-left:auto}
+  .split-bd{padding:4px 15px}
+  .dotmark{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+
+  footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);
+         font-size:12.5px;color:var(--dim);line-height:1.65}
+  footer b{color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){.panel.on{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand">
+      <h1>Jour J</h1>
+      <span>Le mémo du couple</span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" id="t1" role="tab" aria-selected="true"  aria-controls="p1">Pré-travail</button>
+      <button class="tab" id="t2" role="tab" aria-selected="false" aria-controls="p2">La respiration</button>
+      <button class="tab" id="t3" role="tab" aria-selected="false" aria-controls="p3">Le travail</button>
+      <button class="tab" id="t4" role="tab" aria-selected="false" aria-controls="p4">La poussée</button>
+      <button class="tab" id="t5" role="tab" aria-selected="false" aria-controls="p5">Le conjoint</button>
+      <button class="tab" id="t6" role="tab" aria-selected="false" aria-controls="p6">Projet de naissance</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ================== 1. PRÉ-TRAVAIL ================== -->
+<section class="panel on" id="p1" role="tabpanel" aria-labelledby="t1">
+  <p class="eyebrow">À la maison · phase de latence</p>
+  <h2 class="title">Pré-travail</h2>
+  <p class="lede">Le col se raccourcit et commence à s'ouvrir. Les contractions s'installent. <b>Le seul objectif : économiser l'énergie et laisser le corps travailler.</b></p>
+
+  <div class="alert">
+    <h5>Perte des eaux — quoi regarder</h5>
+    <ul>
+      <li><i style="background:#EDE7C8"></i><span><b>Clair, citrin</b> — on part dans les 8 h.</span></li>
+      <li><i style="background:#C97A7A"></i><span><b>Un peu de sang</b> — on part dans les 8 h.</span></li>
+      <li><i style="background:#7A8C4A"></i><span><b>Vert kaki</b> — on part <b>dans la demi-heure</b>.</span></li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>Bouger pour faire descendre</h3>
+    <div class="ex">
+      <div class="ex-card">
+        <svg viewBox="0 0 70 62" aria-hidden="true">
+          <circle cx="24" cy="14" r="6" class="fig"/>
+          <path d="M24 21 v16 M24 37 l-8 14 M24 37 l9 13 M24 26 l-8 7 M24 26 l9 6" class="fig"/>
+          <path d="M44 40 h14 M58 40 l-6 -5 M58 40 l-6 5" class="arw"/>
+          <path d="M12 56 h46" class="fig" stroke-dasharray="3 4"/>
+        </svg>
+        <div><h4>Marcher</h4><p>Le plus efficace. <b>Escaliers en biais</b>, un pied par marche, ça ouvre le bassin.<sup class="x">+</sup></p></div>
+      </div>
+      <div class="ex-card">
+        <svg viewBox="0 0 70 62" aria-hidden="true">
+          <circle cx="35" cy="42" r="16" class="fig"/>
+          <circle cx="35" cy="14" r="6" class="fig"/>
+          <path d="M35 21 v9" class="fig"/>
+          <path d="M22 34 q13 -6 26 0" class="fig"/>
+          <path d="M14 46 q-6 -6 0 -12 M56 34 q6 6 0 12" class="arw"/>
+        </svg>
+        <div><h4>Ballon</h4><p>Assise dessus : <b>bascules du bassin</b>, cercles lents, huit. Ou penchée dessus à genoux.<sup class="x">+</sup></p></div>
+      </div>
+      <div class="ex-card">
+        <svg viewBox="0 0 70 62" aria-hidden="true">
+          <path d="M14 40 q18 -16 40 0" class="fig"/>
+          <circle cx="10" cy="38" r="5.5" class="fig"/>
+          <path d="M20 40 v14 M50 40 v14" class="fig"/>
+          <path d="M28 20 q6 -5 12 0" class="arw"/>
+          <path d="M14 44 q18 8 40 0" class="fig" stroke-dasharray="3 3" opacity=".55"/>
+        </svg>
+        <div><h4>Quatre pattes</h4><p>Dos rond / dos creux, très lentement. Soulage le bas du dos.<sup class="x">+</sup></p></div>
+      </div>
+      <div class="ex-card">
+        <svg viewBox="0 0 70 62" aria-hidden="true">
+          <circle cx="35" cy="16" r="6" class="fig"/>
+          <path d="M35 23 v12" class="fig"/>
+          <path d="M35 35 l-14 8 v10 M35 35 l14 8 v10" class="fig"/>
+          <path d="M21 43 l-7 -4 M49 43 l7 -4" class="arw"/>
+        </svg>
+        <div><h4>Marche accroupie</h4><p>Quelques pas en position basse, appuyée sur moi.</p></div>
+      </div>
+      <div class="ex-card">
+        <svg viewBox="0 0 70 62" aria-hidden="true">
+          <circle cx="35" cy="18" r="6" class="fig"/>
+          <path d="M35 25 v14" class="fig"/>
+          <path d="M35 39 l-16 6 M35 39 l16 6" class="fig"/>
+          <path d="M19 45 q16 8 32 0" class="fig" stroke-dasharray="3 3"/>
+          <path d="M22 34 l-7 -5 M48 34 l7 -5" class="arw"/>
+        </svg>
+        <div><h4>Assise en prière</h4><p>Plantes de pieds jointes, on <b>fait jouer les genoux</b> — ouverture, fermeture.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Soulager et se détendre</h3>
+    <ul class="plain">
+      <li><b>Bain chaud</b> ou douche, jet sur le bas du dos.</li>
+      <li><b>2 Spasfon</b>, puis <b>2 autres 10 minutes après</b>.</li>
+      <li>Lumière basse, musique. On déconnecte le mental — c'est ce qui laisse le col se dilater.</li>
+      <li><b>Contre-pression sur le sacrum</b> : je pousse fort avec la paume au creux du bas du dos pendant la contraction.<sup class="x">+</sup></li>
+      <li>Si c'est la nuit : <b>dormir entre les contractions</b>. Vraiment.<sup class="x">+</sup></li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>Le carburant</h3>
+    <ul class="plain">
+      <li>Manger des <b>sucres lents</b> avant de partir : pâtes, riz, pain.</li>
+      <li>Boire régulièrement, par petites gorgées.</li>
+      <li><b>Après la péridurale, on ne mange plus.</b> Donc c'est maintenant.</li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>Quand on part</h3>
+    <ul class="plain">
+      <li>Je <b>chronomètre</b> : durée d'une contraction, intervalle entre deux, régularité.</li>
+      <li>Le seuil de départ est celui donné par <b>la maternité</b> — on appelle, on ne devine pas.</li>
+      <li>Péridurale <b>pas avant 3 cm</b>. De 3 à 10 cm, compter quelques heures.</li>
+      <li>Dans le sac : le <b>projet de naissance</b> et la <b>lettre de la sage-femme</b>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================== 2. LA RESPIRATION ================== -->
+<section class="panel" id="p2" role="tabpanel" aria-labelledby="t2">
+  <p class="eyebrow">Notation · cinq respirations</p>
+  <h2 class="title">La respiration</h2>
+  <p class="lede">Toutes les respirations sont écrites de la même façon. <b>Au-dessus de la ligne, l'air entre. En dessous, l'air sort.</b> La longueur du tracé, c'est la durée.</p>
+
+  <div class="legend" style="margin-top:18px">
+    <h5>Comment lire les tracés</h5>
+    <div class="lg-row">
+      <svg width="52" height="20" aria-hidden="true"><line x1="2" y1="16" x2="50" y2="16" class="bl"/><path d="M4 16 Q26 0 48 16" class="tr" stroke="#B98CE8"/></svg>
+      <span><b>Bosse haute</b> — inspiration</span>
+    </div>
+    <div class="lg-row">
+      <svg width="52" height="20" aria-hidden="true"><line x1="2" y1="4" x2="50" y2="4" class="bl"/><path d="M4 4 Q26 20 48 4" class="tr" stroke="#B98CE8"/></svg>
+      <span><b>Vallée basse</b> — expiration</span>
+    </div>
+    <div class="lg-row">
+      <svg width="52" height="20" aria-hidden="true"><line x1="2" y1="16" x2="50" y2="16" class="bl"/><path d="M4 6 h44" class="tr" stroke="#F0B429" stroke-dasharray="3 4"/></svg>
+      <span><b>Plateau pointillé</b> — respiration bloquée</span>
+    </div>
+    <div class="lg-row">
+      <svg width="52" height="20" aria-hidden="true"><line x1="2" y1="4" x2="50" y2="4" class="bl"/><path d="M4 4 q5 9 10 0 q5 9 10 0 q5 9 10 0 q5 9 10 0" class="tr" stroke="#4FCFC0"/></svg>
+      <span><b>Dents</b> — respiration freinée, en zestes</span>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <p class="sub">01 · Au repos</p>
+  <div class="breath">
+    <div class="breath-hd"><h4>Respiration de fond</h4><div class="breath-when">Entre les contractions</div></div>
+    <p>Le ventre gonfle à l'inspiration, se dégonfle lentement. <b>L'expiration est toujours plus longue que l'inspiration.</b> C'est la respiration par défaut, celle qui recharge.</p>
+    <svg viewBox="0 0 320 104" aria-hidden="true">
+      <line x1="6" y1="52" x2="314" y2="52" class="bl"/>
+      <path d="M10 52 Q42 12 74 52 Q124 96 174 52 Q206 12 238 52 Q276 96 314 52" class="tr" stroke="#B98CE8"/>
+      <text x="30" y="34" class="tl">4 s</text>
+      <text x="112" y="76" class="tl">6 à 8 s</text>
+      <text x="196" y="34" class="tl">4 s</text>
+      <text x="262" y="76" class="tl">6 à 8 s</text>
+    </svg>
+  </div>
+
+  <!-- 2 -->
+  <p class="sub">02 · Pendant la contraction</p>
+  <div class="breath">
+    <div class="breath-hd"><h4>La respiration de contraction</h4><div class="breath-when">≈ 1 minute</div></div>
+    <p>Une contraction monte, culmine, redescend. On la <b>traverse en soufflant</b> : une inspiration au démarrage, puis des expirations longues jusqu'au bout — et un grand soupir quand elle relâche.</p>
+    <svg viewBox="0 0 320 156" aria-hidden="true">
+      <!-- courbe de contraction -->
+      <path d="M10 62 C 58 62 74 18 132 18 C 198 18 214 62 262 62 L 262 62" class="tr" stroke="#5D6B7D" opacity=".9"/>
+      <path d="M10 62 C 58 62 74 18 132 18 C 198 18 214 62 262 62 Z" fill="#B98CE8" opacity=".07"/>
+      <text x="34" y="56" class="tl">montée</text>
+      <text x="112" y="12" class="tl hi">ACMÉ</text>
+      <text x="212" y="56" class="tl">descente</text>
+      <line x1="262" y1="14" x2="262" y2="140" stroke="#3A4759" stroke-width="1" stroke-dasharray="3 4"/>
+      <text x="268" y="26" class="tl">c'est</text>
+      <text x="268" y="37" class="tl">fini</text>
+      <!-- tracé de la respiration -->
+      <line x1="6" y1="104" x2="314" y2="104" class="bl"/>
+      <path d="M10 104 Q26 82 42 104 Q76 142 110 104 Q144 142 178 104 Q212 142 246 104 Q280 150 314 118"
+            class="tr" stroke="#B98CE8"/>
+      <text x="14" y="94" class="tl">1 inspi</text>
+      <text x="104" y="136" class="tl">expirations longues</text>
+      <text x="266" y="146" class="tl hi">SOUPIR</text>
+    </svg>
+    <div class="chips">
+      <span class="chip">Je ne parle pas pendant</span>
+      <span class="chip">Puis respiration spontanée</span>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <p class="sub">03 · Pour faire descendre le bébé</p>
+  <div class="breath">
+    <div class="breath-hd"><h4>La respiration qui met dans l'axe</h4><div class="breath-when">Fin de dilatation</div></div>
+    <p>Après une longue expiration : <b>une inspiration courte</b>, puis <b>une expiration très longue</b>. Le diaphragme descend et met le bébé dans l'axe. Poussées plus efficaces, donc moins de travail.</p>
+    <svg viewBox="0 0 320 124" aria-hidden="true">
+      <line x1="6" y1="48" x2="314" y2="48" class="bl"/>
+      <path d="M10 48 Q58 96 106 48 Q122 22 138 48 Q210 108 300 48" class="tr" stroke="#B98CE8"/>
+      <text x="34" y="82" class="tl">longue expiration</text>
+      <text x="112" y="18" class="tl hi">INSPI COURTE</text>
+      <text x="196" y="94" class="tl">expiration très longue</text>
+      <g class="arw" stroke="#B98CE8">
+        <path d="M180 100 v12 M180 112 l-4 -5 M180 112 l4 -5"/>
+        <path d="M208 100 v14 M208 114 l-4 -5 M208 114 l4 -5"/>
+        <path d="M236 100 v12 M236 112 l-4 -5 M236 112 l4 -5"/>
+      </g>
+      <text x="182" y="122" class="tl">le diaphragme descend</text>
+    </svg>
+  </div>
+
+  <!-- 4 -->
+  <p class="sub">04 · Pour tenir le rythme</p>
+  <div class="pacer">
+    <svg viewBox="0 0 200 250" aria-hidden="true">
+      <rect class="pc-track" x="35" y="25" width="130" height="200" rx="12"/>
+      <circle id="lung" class="pc-lung" cx="100" cy="125" r="18"/>
+      <line id="e0" class="pc-edge" x1="35" y1="225" x2="35" y2="25"/>
+      <line id="e1" class="pc-edge" x1="35" y1="25"  x2="165" y2="25"/>
+      <line id="e2" class="pc-edge" x1="165" y1="25" x2="165" y2="225"/>
+      <line id="e3" class="pc-edge" x1="165" y1="225" x2="35" y2="225"/>
+      <circle id="dot" class="pc-dot" cx="35" cy="225" r="9"/>
+    </svg>
+    <div class="pc-phase" id="phase">Le rectangle</div>
+    <div class="pc-count" id="count">4 temps · inspiration courte, expiration longue</div>
+    <button class="pc-btn" id="go">Démarrer</button>
+  </div>
+  <p class="note" style="margin-top:6px">Le rectangle n'est pas un carré : le côté de l'expiration est <strong>deux fois plus long</strong>. Je suis le point et je respire avec elle.</p>
+
+  <!-- 5 -->
+  <p class="sub">05 · Quand il ne faut surtout pas pousser</p>
+  <div class="breath">
+    <div class="breath-hd"><h4>Le petit chien</h4><div class="breath-when">Sur consigne sage-femme</div></div>
+    <p>Au dégagement de la tête, la sage-femme peut dire <b>« ne pousse plus »</b> : le bébé doit sortir tout seul, millimètre par millimètre, pour que le périnée ait le temps de se distendre.</p>
+    <p style="margin-top:8px">Respiration <b>courte, rapide, superficielle</b>, haut dans la poitrine, bouche ouverte, comme un chien qui halète. On ne peut pas pousser et haleter en même temps — c'est exactement pour ça qu'on l'utilise. Le diaphragme reste haut et ne peut plus appuyer sur l'utérus.<sup class="x">+</sup></p>
+    <div class="chips" style="margin-top:10px">
+      <span class="chip">≈ 2 respirations / seconde</span>
+      <span class="chip">Bouche ouverte, langue basse</span>
+      <span class="chip">Quelques secondes seulement</span>
+    </div>
+    <p class="note" style="margin-top:10px">Je le fais <strong>avec elle, en face d'elle</strong> : c'est plus facile à suivre qu'à écouter. Si elle part en hyperventilation (fourmis dans les mains, tête qui tourne), on ralentit et on repasse sur une expiration longue.<sup class="x">+</sup></p>
+    <svg viewBox="0 0 320 76" aria-hidden="true">
+      <line x1="6" y1="38" x2="314" y2="38" class="bl"/>
+      <path d="M14 38 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0 q7 -14 14 0 q7 14 14 0"
+            class="tr" stroke="#F2705A" stroke-width="2.2"/>
+      <text x="112" y="68" class="tl hi">RAPIDE ET SUPERFICIEL</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ================== 3. LE TRAVAIL ================== -->
+<section class="panel" id="p3" role="tabpanel" aria-labelledby="t3">
+  <p class="eyebrow">De 3 à 10 cm · quelques heures</p>
+  <h2 class="title">Le travail</h2>
+  <p class="lede">Deux modes qui alternent. <b>On récupère</b> entre les contractions, <b>on fait avancer</b> le reste du temps. Savoir dans lequel on est, c'est l'essentiel.</p>
+
+  <!-- REPOS -->
+  <div class="sec">
+    <div class="split">
+      <div class="split-hd">
+        <span class="dotmark" style="background:#5FD49A"></span>
+        <b>Récupérer</b>
+        <span>Mode A</span>
+      </div>
+      <div class="split-bd">
+        <ul class="plain">
+          <li>Lumière éteinte, musique. <b>Déconnecter le cerveau.</b></li>
+          <li>Position <b>avachie ou suspendue</b>, tout le poids relâché.</li>
+          <li>Sur le côté, <b>coussin entre les genoux</b>.<sup class="x">+</sup></li>
+          <li><b>Respiration de fond</b>, expiration plus longue que l'inspiration.</li>
+          <li>Petites gorgées d'eau, front rafraîchi.<sup class="x">+</sup></li>
+          <li>Quand l'intensité monte, <b>son cerveau se déconnecte</b> : répondre devient difficile. C'est normal — je ne l'interroge pas.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVANCER -->
+  <div class="sec">
+    <div class="split">
+      <div class="split-hd">
+        <span class="dotmark" style="background:#F0B429"></span>
+        <b>Faire avancer</b>
+        <span>Mode B</span>
+      </div>
+      <div class="split-bd">
+        <ul class="plain">
+          <li><b>On cherche la verticalité</b> — c'est le principe numéro un.</li>
+          <li><b>Pieds et genoux ouverts vers l'extérieur</b>, même jambes croisées. C'est moi qui les replace.</li>
+          <li><b>Enroulement</b> : dos rond autour du bébé.</li>
+          <li>Si elle gigote : <b>position de descente</b>, on ramène les genoux pour l'aider.</li>
+          <li>Changer de position régulièrement — <b>et lui dire à chaque fois.</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Le répertoire des quatre positions</h3>
+    <div class="pos">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Position verticale : elle debout appuyée sur le conjoint">
+        <path d="M40 160 L290 160" class="bed"/>
+        <circle cx="78" cy="46" r="14" class="figm-f"/>
+        <path d="M78 60 L88 110" class="figm"/>
+        <path d="M88 110 L78 154 M88 110 L98 154" class="figm"/>
+        <path d="M78 154 l-10 0 M98 154 l10 0" class="figm"/>
+        <path d="M80 72 L138 62" class="figm"/>
+        <circle cx="172" cy="44" r="14" class="figp-f"/>
+        <path d="M172 58 L170 112" class="figp"/>
+        <path d="M170 112 L158 156 M170 112 L182 156" class="figp"/>
+        <path d="M158 156 l-10 0 M182 156 l10 0" class="figp"/>
+        <path d="M170 72 L124 86" class="figp"/>
+        <path d="M256 38 L256 118 M256 118 l-7 -10 M256 118 l7 -10" class="ar"/>
+        <text x="256" y="30" class="cap" fill="#8AB4F8">GRAVITÉ</text>
+        <circle cx="112" cy="40" r="11" class="mk"/><text x="112" y="44.5" class="mk-t">1</text>
+        <circle cx="118" cy="130" r="11" class="mk"/><text x="118" y="134.5" class="mk-t">2</text>
+        <circle cx="212" cy="126" r="11" class="mk"/><text x="212" y="130.5" class="mk-t">3</text>
+      </svg>
+      <h4>Verticale</h4>
+      <p class="why">Le premier réflexe : debout, la gravité fait descendre le bébé et le bassin s'ouvre.</p>
+      <ol class="numlist">
+        <li>Elle passe les bras autour de mon cou et <b>pose tout son poids sur moi</b>. Je la tiens par le bas du dos, pas par les épaules.</li>
+        <li><b>Genoux souples, jamais verrouillés.</b> Elle balance le bassin d'avant en arrière ou en cercles pendant la contraction.</li>
+        <li>Je me campe <b>jambes écartées et genoux fléchis</b> : c'est moi le pilier, je dois pouvoir tenir plusieurs minutes sans bouger.</li>
+      </ol>
+    </div>
+
+    <div class="pos">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Position suspendue : elle pendue au cou du conjoint, jambes relâchées">
+        <path d="M40 162 L290 162" class="bed"/>
+        <circle cx="104" cy="64" r="14" class="figm-f"/>
+        <path d="M104 78 Q112 104 108 124" class="figm"/>
+        <path d="M108 124 L94 152 M108 124 L120 152" class="figm"/>
+        <path d="M94 152 l-9 4 M120 152 l9 4" class="figm"/>
+        <path d="M104 82 L152 58" class="figm"/>
+        <circle cx="180" cy="44" r="14" class="figp-f"/>
+        <path d="M180 58 L178 114" class="figp"/>
+        <path d="M178 114 L166 158 M178 114 L192 158" class="figp"/>
+        <path d="M166 158 l-10 0 M192 158 l10 0" class="figp"/>
+        <path d="M176 72 L130 88" class="figp"/>
+        <circle cx="146" cy="46" r="11" class="mk"/><text x="146" y="50.5" class="mk-t">1</text>
+        <circle cx="76" cy="112" r="11" class="mk"/><text x="76" y="116.5" class="mk-t">2</text>
+        <circle cx="228" cy="120" r="11" class="mk"/><text x="228" y="124.5" class="mk-t">3</text>
+      </svg>
+      <h4>Avachie / suspendue</h4>
+      <p class="why">Pour récupérer sans s'allonger. Le bassin reste libre alors que les muscles ne travaillent plus.</p>
+      <ol class="numlist">
+        <li>Elle <b>se pend</b> à mon cou, à un drap noué ou à la barre. Ses bras ne tiennent rien : ils sont juste accrochés.</li>
+        <li><b>Tout le haut du corps se relâche</b> — épaules, mâchoire, mains. C'est ce relâchement qui laisse le col s'ouvrir.</li>
+        <li>Je porte son poids en <b>gardant le dos droit et en pliant les jambes</b>, sinon je tiens deux minutes et je lâche.</li>
+      </ol>
+    </div>
+
+    <div class="pos">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Comparaison : genoux serrés et pieds tournés vers l'intérieur contre genoux ouverts et pieds vers l'extérieur">
+        <path d="M160 24 L160 186" class="gd"/>
+        <ellipse cx="84" cy="46" rx="30" ry="13" class="figm no"/>
+        <path d="M70 58 L68 104 M98 58 L100 104" class="figm no"/>
+        <circle cx="68" cy="104" r="4.5" class="no-f"/><circle cx="100" cy="104" r="4.5" class="no-f"/>
+        <path d="M68 104 L66 148 M100 104 L102 148" class="figm no"/>
+        <path d="M66 148 L80 156 M102 148 L88 156" class="figm no"/>
+        <circle cx="84" cy="176" r="12" class="no-f"/>
+        <path d="M79 171 l10 10 M89 171 l-10 10" stroke="#0E1218" stroke-width="2.6" stroke-linecap="round"/>
+        <text x="84" y="20" class="cap" fill="#F2705A">BASSIN FERMÉ</text>
+        <ellipse cx="238" cy="46" rx="30" ry="13" class="figm ok"/>
+        <path d="M224 58 L202 100 M252 58 L274 100" class="figm ok"/>
+        <circle cx="202" cy="100" r="4.5" class="ok-f"/><circle cx="274" cy="100" r="4.5" class="ok-f"/>
+        <path d="M202 100 L192 144 M274 100 L284 144" class="figm ok"/>
+        <path d="M192 144 L174 150 M284 144 L302 150" class="figm ok"/>
+        <circle cx="238" cy="176" r="12" class="ok-f"/>
+        <path d="M232 176 l4 5 l9 -10" fill="none" stroke="#0E1218" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="238" y="20" class="cap" fill="#5FD49A">BASSIN OUVERT</text>
+        <circle cx="299" cy="128" r="11" class="mk"/><text x="299" y="132.5" class="mk-t">1</text>
+        <circle cx="238" cy="86" r="11" class="mk"/><text x="238" y="90.5" class="mk-t">2</text>
+        <circle cx="84" cy="128" r="11" class="mk"/><text x="84" y="132.5" class="mk-t">3</text>
+      </svg>
+      <h4>Genoux ouverts</h4>
+      <p class="why">C'est la rotation des hanches vers l'extérieur qui élargit la sortie du bassin. Ça marche assise, allongée, sur le côté — dans n'importe quelle position.</p>
+      <ol class="numlist">
+        <li><b>Les pieds pivotent vers l'extérieur.</b> Talons plutôt rapprochés, orteils écartés, comme un pingouin. C'est le repère le plus simple à vérifier d'un coup d'œil.</li>
+        <li><b>Les genoux tombent sur les côtés</b>, jamais serrés l'un contre l'autre. Je cale <b>un coussin ou une couverture roulée sous chaque genou</b> pour qu'elle n'ait aucun effort à fournir pour les maintenir.</li>
+        <li><b>Quand ça ressemble à ça, je corrige.</b> Avec la péridurale elle ne sent plus ses jambes : elles roulent vers l'intérieur toutes seules. Je prends chaque pied à pleine main et je le fais pivoter vers l'extérieur, en lui disant ce que je fais. <b>Je revérifie après chaque changement de position.</b></li>
+      </ol>
+      <p class="note">Si ses jambes finissent croisées, ce n'est pas grave en soi : ce qui compte, c'est que <strong>les pieds restent tournés vers l'extérieur</strong>.</p>
+    </div>
+
+    <div class="pos">
+      <svg viewBox="0 0 320 190" role="img" aria-label="Enroulement : menton rentré, dos rond, le bébé se place dans l'axe">
+        <circle cx="102" cy="58" r="14" class="figm-f"/>
+        <path d="M114 68 Q166 88 156 142" class="figm"/>
+        <path d="M110 80 L88 112" class="figm"/>
+        <path d="M156 142 L112 154 M112 154 L116 180" class="figm"/>
+        <path d="M116 180 l-11 2" class="figm"/>
+        <ellipse cx="130" cy="112" rx="13" ry="18" class="gd"/>
+        <path d="M104 40 Q124 34 132 48 M132 48 l-9 -1 M132 48 l-1 -9" class="ar"/>
+        <path d="M198 76 Q212 108 200 138 M200 138 l9 -5 M200 138 l-1 -10" class="ar"/>
+        <circle cx="74" cy="42" r="11" class="mk"/><text x="74" y="46.5" class="mk-t">1</text>
+        <circle cx="230" cy="106" r="11" class="mk"/><text x="230" y="110.5" class="mk-t">2</text>
+        <circle cx="76" cy="140" r="11" class="mk"/><text x="76" y="144.5" class="mk-t">3</text>
+        <path d="M87 138 L112 122" class="gd"/>
+      </svg>
+      <h4>Enroulement</h4>
+      <p class="why">Le dos rond ferme l'angle du haut du bassin et pousse le bébé vers la bonne trajectoire.</p>
+      <ol class="numlist">
+        <li><b>Menton rentré vers la poitrine</b>, regard vers le ventre. C'est le point de départ : sans le menton, le dos ne s'enroule pas.</li>
+        <li><b>Le dos s'arrondit</b> vertèbre par vertèbre, comme si elle voulait faire le dos rond d'un chat. Elle s'enroule autour du bébé.</li>
+        <li>Le bébé <b>se replace dans l'axe</b> du bassin. C'est ce qui rend les poussées efficaces, donc plus courtes.</li>
+      </ol>
+    </div>
+    <p class="note">Et la <strong>position de descente</strong> par-dessus : genoux ramenés vers elle, à utiliser dès qu'elle s'agite ou que le bébé doit descendre.</p>
+  </div>
+
+  <div class="sec">
+    <h3>À partir de la péridurale</h3>
+    <ul class="plain">
+      <li><b>On ne mange plus.</b></li>
+      <li>Elle peut encore changer de position — je demande à la sage-femme lesquelles restent possibles.<sup class="x">+</sup></li>
+      <li>Les contractions continuent : les respirations restent utiles.<sup class="x">+</sup></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================== 4. LA POUSSÉE ================== -->
+<section class="panel" id="p4" role="tabpanel" aria-labelledby="t4">
+  <p class="eyebrow">Deux techniques · un ordre</p>
+  <h2 class="title">La poussée</h2>
+  <p class="lede"><b>A pour faire descendre</b> le bébé. <b>B pour le dégagement</b>, quand la tête arrive. Dans cet ordre.</p>
+
+  <!-- TECHNIQUE A -->
+  <div class="sec">
+    <h3 style="--ac:#F0B429">Technique A — poussée bloquée</h3>
+    <p class="lede" style="margin-top:-2px">La plus puissante. Conseillée pour un premier bébé.</p>
+
+    <div class="breath" style="margin-top:14px">
+      <svg viewBox="0 0 320 88" aria-hidden="true">
+        <line x1="6" y1="58" x2="314" y2="58" class="bl"/>
+        <path d="M10 58 Q34 16 58 16" class="tr" stroke="#F0B429"/>
+        <path d="M58 16 h190" class="tr" stroke="#F0B429" stroke-dasharray="4 5"/>
+        <path d="M248 16 Q276 58 304 58" class="tr" stroke="#F0B429"/>
+        <text x="14" y="46" class="tl">inspire</text>
+        <text x="120" y="10" class="tl hi">BLOQUÉ · 5 à 6 s</text>
+        <g class="arw" stroke="#F0B429">
+          <path d="M110 26 v22 M110 48 l-4 -6 M110 48 l4 -6"/>
+          <path d="M152 26 v28 M152 54 l-4 -6 M152 54 l4 -6"/>
+          <path d="M194 26 v22 M194 48 l-4 -6 M194 48 l4 -6"/>
+        </g>
+        <text x="116" y="80" class="tl">la poussée descend dans le bassin</text>
+      </svg>
+    </div>
+
+    <div class="breath">
+      <svg viewBox="0 0 300 200" role="img" aria-label="Schéma : air bloqué, menton rentré, diaphragme qui pousse fort vers le bas">
+        <circle cx="88" cy="32" r="18" class="fig"/>
+        <line x1="79" y1="36" x2="97" y2="36" stroke="#F0B429" stroke-width="3" stroke-linecap="round"/>
+        <path d="M103 20 l13 -7 M103 28 l15 0 M103 36 l13 7" stroke="#F0B429" stroke-width="2" stroke-linecap="round" fill="none" opacity=".8"/>
+        <text x="126" y="24" class="tl hi">AIR BLOQUÉ</text>
+        <text x="126" y="36" class="tl">menton rentré, dos enroulé</text>
+        <line x1="88" y1="50" x2="88" y2="62" class="fig"/>
+        <rect x="54" y="62" width="68" height="46" rx="16" fill="#F0B429" opacity=".18"/>
+        <rect x="54" y="62" width="68" height="46" rx="16" class="fig" stroke="#F0B429"/>
+        <text x="132" y="90" class="tl">poumons pleins</text>
+        <path d="M54 112 Q88 126 122 112" fill="none" stroke="#F0B429" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="132" y="116" class="tl hi">DIAPHRAGME</text>
+        <g stroke="#F0B429" stroke-width="3" stroke-linecap="round" fill="none">
+          <path d="M70 126 v24 M70 150 l-6 -7 M70 150 l6 -7"/>
+          <path d="M88 126 v32 M88 158 l-6 -7 M88 158 l6 -7"/>
+          <path d="M106 126 v24 M106 150 l-6 -7 M106 150 l6 -7"/>
+        </g>
+        <path d="M50 166 Q88 192 126 166" class="fig"/>
+        <text x="132" y="174" class="tl hi">VERS LE BAS</text>
+        <text x="132" y="186" class="tl">jamais vers l'avant, jamais dans la tête</text>
+      </svg>
+    </div>
+
+    <ol class="steps" style="--ac:#F0B429">
+      <li><b>Inspire, souffle, puis réinspire</b><em>La première expiration vide les poumons. La deuxième inspiration est la bonne.</em><sup class="x">+</sup></li>
+      <li><b>Bloque l'air, menton rentré</b><em>Dos enroulé autour du bébé, regard vers le ventre. Elle attrape ses cuisses ou les poignées et tire dessus, coudes ouverts.</em><sup class="x">+</sup></li>
+      <li><b>Pousse vers le bas, longtemps</b><em>La sensation juste, c'est celle d'aller à la selle. Rien dans le visage, rien dans la gorge, rien vers l'avant.</em><sup class="x">+</sup></li>
+      <li><b>Souffle et enchaîne</b><em>On relâche, on reprend de l'air, on repart. Sur toute la durée de la contraction.</em></li>
+    </ol>
+    <div class="chips">
+      <span class="chip">5–6 s par poussée</span>
+      <span class="chip">2 à 3 poussées / contraction</span>
+      <span class="chip">Je compte à voix haute</span>
+    </div>
+    <p class="note">C'est la technique que l'équipe demande <strong>quand le bébé doit naître vite</strong> : elle est la plus puissante. En contrepartie elle fatigue davantage et sollicite plus le périnée, et la respiration s'interrompt le temps du blocage.<sup class="x">+</sup></p>
+  </div>
+
+  <!-- TECHNIQUE B -->
+  <div class="sec">
+    <h3 style="--ac:#4FCFC0">Technique B — poussée freinée</h3>
+    <p class="lede" style="margin-top:-2px">Moins forte, mais elle protège le périnée.</p>
+
+    <div class="breath" style="margin-top:14px">
+      <svg viewBox="0 0 320 88" aria-hidden="true">
+        <line x1="6" y1="34" x2="314" y2="34" class="bl"/>
+        <path d="M10 34 Q28 12 46 34" class="tr" stroke="#4FCFC0"/>
+        <path d="M46 34 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0 q9 16 18 0"
+              class="tr" stroke="#4FCFC0"/>
+        <text x="12" y="10" class="tl">inspi calme</text>
+        <text x="120" y="66" class="tl hi">ZESTES D’AIR · SANS JAMAIS BLOQUER</text>
+        <text x="120" y="80" class="tl">toute la durée de la contraction</text>
+      </svg>
+    </div>
+
+    <div class="breath">
+      <svg viewBox="0 0 300 200" role="img" aria-label="Schéma : l'air sort en zestes, poussée lente et continue, périnée préservé">
+        <circle cx="88" cy="32" r="18" class="fig"/>
+        <ellipse cx="88" cy="37" rx="7" ry="4.5" fill="none" stroke="#4FCFC0" stroke-width="2.5"/>
+        <g stroke="#4FCFC0" stroke-width="2.6" stroke-linecap="round">
+          <line x1="106" y1="34" x2="116" y2="32"/>
+          <line x1="122" y1="31" x2="132" y2="29"/>
+          <line x1="138" y1="28" x2="146" y2="26"/>
+        </g>
+        <text x="126" y="46" class="tl hi">ZESTES D’AIR</text>
+        <text x="126" y="58" class="tl">bouche entrouverte</text>
+        <line x1="88" y1="50" x2="88" y2="66" class="fig"/>
+        <rect x="54" y="66" width="68" height="42" rx="16" fill="#4FCFC0" opacity=".07"/>
+        <rect x="54" y="90" width="68" height="18" rx="9" fill="#4FCFC0" opacity=".2"/>
+        <rect x="54" y="66" width="68" height="42" rx="16" class="fig" stroke="#4FCFC0"/>
+        <text x="132" y="86" class="tl">le thorax se vide</text>
+        <path d="M54 112 Q88 124 122 112" fill="none" stroke="#4FCFC0" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="132" y="116" class="tl hi">DIAPHRAGME</text>
+        <path d="M88 126 v32 M88 158 l-6 -7 M88 158 l6 -7" stroke="#4FCFC0" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <text x="132" y="144" class="tl">poussée lente</text>
+        <text x="132" y="155" class="tl">et continue</text>
+        <path d="M50 170 Q88 194 126 170" fill="none" stroke="#4FCFC0" stroke-width="3" stroke-linecap="round"/>
+        <path d="M60 180 Q88 198 116 180" fill="none" stroke="#4FCFC0" stroke-width="2" stroke-dasharray="4 4" opacity=".7"/>
+        <text x="132" y="184" class="tl hi">PÉRINÉE PRÉSERVÉ</text>
+      </svg>
+    </div>
+
+    <ol class="steps" style="--ac:#4FCFC0">
+      <li><b>Inspire calmement</b><em>Sans remplir à bloc.</em></li>
+      <li><b>Expire lentement en soufflant</b><em>Bouche entrouverte, l'air sort en petits filets réguliers. La respiration ne s'arrête jamais.</em></li>
+      <li><b>Pousse pendant l'expiration</b><em>Mains en appui sur l'intérieur des cuisses. La force vient du diaphragme qui descend, pas de la gorge.</em><sup class="x">+</sup></li>
+      <li><b>Tiens sur toute la contraction</b><em>Pas de blocage, pas d'à-coups.</em></li>
+    </ol>
+    <p class="note">Pourquoi ça protège : le diaphragme et le périnée travaillent en miroir. En bloquant l'inspiration, on ferme le périnée juste au moment où le bébé doit le franchir ; en expirant, on le laisse s'ouvrir. La respiration n'étant jamais coupée, le bébé reste mieux oxygéné.<sup class="x">+</sup></p>
+    <div class="chips">
+      <span class="chip">Moins de fatigue</span>
+      <span class="chip">Descente plus lente</span>
+      <span class="chip">Efforts parfois plus longs</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Les trois positions de poussée</h3>
+    <p class="lede" style="margin:-2px 0 12px">Dans les trois, la base est la même : <b>dos rond, menton rentré, genoux ouverts vers l'extérieur</b>. Ce qui change, c'est le point d'appui.</p>
+
+    <div class="pos">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Demi-assise sur le dos, dossier relevé, le conjoint remonte le bassin">
+        <path d="M44 62 L86 150 L296 150" class="bed"/>
+        <path d="M92 144 L66 98" class="figm"/>
+        <circle cx="58" cy="84" r="14" class="figm-f"/>
+        <path d="M92 144 L150 106" class="figm"/>
+        <path d="M150 106 L194 128" class="figm"/>
+        <path d="M194 128 l13 -8" class="figm"/>
+        <path d="M70 102 L142 112" class="figm"/>
+        <path d="M92 144 L148 122 L188 142" class="figm" opacity=".35"/>
+        <ellipse cx="100" cy="164" rx="16" ry="8" class="figp-f"/>
+        <path d="M124 184 L104 158 M104 158 l1 10 M104 158 l9 -3" class="ar"/>
+        <path d="M166 92 L146 104 M146 104 l10 0 M146 104 l1 -9" class="ar"/>
+        <circle cx="30" cy="72" r="11" class="mk"/><text x="30" y="76.5" class="mk-t">1</text>
+        <circle cx="182" cy="82" r="11" class="mk"/><text x="182" y="86.5" class="mk-t">2</text>
+        <circle cx="140" cy="188" r="11" class="mk"/><text x="140" y="192.5" class="mk-t">3</text>
+        <circle cx="232" cy="140" r="11" class="mk"/><text x="232" y="144.5" class="mk-t">4</text>
+        <path d="M222 142 L206 134" class="gd"/>
+      </svg>
+      <h4>Demi-assise, dossier relevé</h4>
+      <p class="why">La position par défaut en salle de naissance : l'équipe voit tout et le dossier permet déjà un bon enroulement. La plus fatigante pour le périnée si le dos reste plat.</p>
+      <ol class="numlist">
+        <li><b>Le dossier est relevé au maximum</b> et elle décolle la tête : menton sur la poitrine, regard vers le ventre. Un dos à plat annule la moitié de la poussée.</li>
+        <li>Elle <b>attrape l'arrière de ses cuisses</b> — pas le devant des genoux — et les <b>tire vers ses épaules</b>, coudes largement ouverts vers l'extérieur.</li>
+        <li>Je glisse mes mains <b>sous son sacrum</b> et je <b>remonte le bassin</b> au moment de la poussée. Je le dis avant de le faire.</li>
+        <li><b>Pieds et genoux vers l'extérieur</b>, jamais serrés, même dans les étriers.</li>
+      </ol>
+    </div>
+
+    <div class="pos">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Sur le côté, le conjoint soutient la jambe du dessus">
+        <path d="M26 156 L294 156" class="bed"/>
+        <circle cx="62" cy="112" r="14" class="figm-f"/>
+        <path d="M76 120 L152 128" class="figm"/>
+        <path d="M152 128 L186 150 L220 152" class="figm"/>
+        <path d="M152 122 L188 84" class="figm"/>
+        <path d="M188 84 L222 98" class="figm"/>
+        <path d="M222 98 l6 -12" class="figm"/>
+        <path d="M84 116 L112 100" class="figm"/>
+        <path d="M286 46 L238 88" class="figp"/>
+        <ellipse cx="230" cy="94" rx="15" ry="9" class="figp-f" transform="rotate(-38 230 94)"/>
+        <path d="M198 118 L216 106 M216 106 l-9 -1 M216 106 l1 9" class="ar"/>
+        <circle cx="46" cy="86" r="11" class="mk"/><text x="46" y="90.5" class="mk-t">1</text>
+        <circle cx="176" cy="58" r="11" class="mk"/><text x="176" y="62.5" class="mk-t">2</text>
+        <circle cx="172" cy="130" r="11" class="mk"/><text x="172" y="134.5" class="mk-t">3</text>
+        <circle cx="266" cy="132" r="11" class="mk"/><text x="266" y="136.5" class="mk-t">4</text>
+        <path d="M258 126 L232 106" class="gd"/>
+      </svg>
+      <h4>Sur le côté</h4>
+      <p class="why">La plus protectrice pour le périnée : le sacrum est totalement libre de s'ouvrir, rien n'appuie dessus. Utile aussi quand la péridurale est forte d'un seul côté.</p>
+      <ol class="numlist">
+        <li>Elle est <b>couchée sur le côté</b>, jambe du dessous repliée sur le lit. Le dos reste rond, le menton rentré.</li>
+        <li>Je <b>soutiens toute la jambe du dessus</b> — genou dans une main, cheville dans l'autre, ou son mollet posé sur mon épaule. Elle ne doit pas avoir à la tenir.</li>
+        <li>Au moment de la poussée, elle <b>pousse son pied contre moi</b> : j'oppose une résistance ferme et constante, je ne recule pas.</li>
+        <li>J'ouvre la jambe <b>vers l'extérieur, pas vers le haut</b> : on cherche à écarter, pas à plier.</li>
+      </ol>
+    </div>
+
+    <div class="pos">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Accroupie ou assise, suspendue à la barre de la table">
+        <path d="M92 42 L236 42" class="bed"/>
+        <path d="M104 42 L104 78 M224 42 L224 78" class="gd"/>
+        <circle cx="164" cy="90" r="14" class="figm-f"/>
+        <path d="M164 104 L166 136" class="figm"/>
+        <path d="M156 110 L114 52 M174 110 L216 52" class="figm"/>
+        <path d="M166 136 L126 146 M166 136 L206 146" class="figm"/>
+        <path d="M126 146 L124 176 M206 146 L208 176" class="figm"/>
+        <path d="M124 176 l-13 0 M208 176 l13 0" class="figm"/>
+        <path d="M120 66 L110 52 M110 52 l9 1 M110 52 l1 9" class="ar"/>
+        <path d="M210 66 L220 52 M220 52 l-9 1 M220 52 l-1 9" class="ar"/>
+        <path d="M28 158 L138 140" class="figp"/>
+        <ellipse cx="148" cy="138" rx="14" ry="8" class="figp-f" transform="rotate(-10 148 138)"/>
+        <path d="M164 178 L164 192" class="gd"/>
+        <path d="M60 182 L268 182" class="bed"/>
+        <circle cx="248" cy="62" r="11" class="mk"/><text x="248" y="66.5" class="mk-t">1</text>
+        <circle cx="242" cy="146" r="11" class="mk"/><text x="242" y="150.5" class="mk-t">2</text>
+        <circle cx="66" cy="132" r="11" class="mk"/><text x="66" y="136.5" class="mk-t">3</text>
+        <circle cx="164" cy="196" r="0" class="mk"/>
+      </svg>
+      <h4>Accroupie ou assise, suspendue à la barre</h4>
+      <p class="why">La gravité s'ajoute à la poussée et le bassin est à son ouverture maximale. La plus efficace, mais elle fatigue vite : on la garde pour les dernières poussées.</p>
+      <ol class="numlist">
+        <li>Elle <b>tire sur la barre ou les poignées</b> de la table en même temps qu'elle pousse. Les bras tirent vers elle, le corps descend : les deux forces vont dans le bon sens.</li>
+        <li><b>Genoux très écartés, pieds à plat et tournés vers l'extérieur.</b> Les fesses descendent le plus bas possible sans que les talons décollent.</li>
+        <li>Je me place <b>derrière ou à côté</b> et je soutiens son dos ou ses aisselles. Sans appui, elle ne tiendra pas la position plus de deux ou trois contractions.</li>
+      </ol>
+    </div>
+
+    <p class="note">Le choix de la position se décide <strong>avec la sage-femme</strong> — je lui demande l'intérêt de chacune et on le note dans le projet de naissance.</p>
+  </div>
+
+  <div class="sec">
+    <h3>Au moment de la sortie</h3>
+    <ul class="plain">
+      <li>La sage-femme <b>appuie sur la tête</b> du bébé et soutient le périnée pour éviter la déchirure.</li>
+      <li>Quand elle dit <b>« ne pousse plus »</b> → respiration du petit chien, onglet <b>La respiration</b>. C'est le moment le plus important à ne pas rater.</li>
+      <li>À partir de là, <b>c'est elle qui donne le rythme</b>, plus la contraction. Je relaie sa consigne au lieu de compter.</li>
+      <li>Une fois la tête sortie, le reste du corps vient <b>en une ou deux poussées douces</b>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================== 5. MON RÔLE ================== -->
+<section class="panel" id="p5" role="tabpanel" aria-labelledby="t5">
+  <p class="eyebrow">Aidant et soutien</p>
+  <h2 class="title">Mémo du conjoint le jour J</h2>
+  <p class="lede">Elle n'a plus la disponibilité mentale pour décider ou expliquer. <b>Je prends la charge logistique, elle garde toute son énergie pour le travail.</b></p>
+
+  <div class="sec">
+    <h3>Les quatre règles</h3>
+    <ul class="plain rules">
+      <li><b>J'annonce chaque geste avant de le faire.</b> Toujours.</li>
+      <li><b>Je ne pose aucune question</b> pendant l'accouchement.</li>
+      <li><b>Je ne la fais pas rire.</b></li>
+      <li><b>Je l'accompagne dans chaque changement de position.</b></li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>Mes gestes</h3>
+    <ul class="plain">
+      <li><b>Replacer ses pieds et ses genoux</b> vers l'extérieur — c'est mon geste par défaut.</li>
+      <li><b>Remonter son bassin</b> quand elle pousse sur le dos.</li>
+      <li><b>Faire appui</b> pour ses jambes quand elle est sur le côté.</li>
+      <li><b>Contre-pression sur le sacrum</b> avec la paume, fort, pendant la contraction.<sup class="x">+</sup></li>
+      <li><b>Respirer avec elle</b>, à voix haute, sur mon rythme si elle décroche.</li>
+      <li>Eau par petites gorgées, front rafraîchi, lumière et musique gérées.<sup class="x">+</sup></li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>Ce que je dis</h3>
+    <p class="lede" style="margin:-2px 0 10px">Phrases courtes, affirmatives, jamais interrogatives.</p>
+    <ul class="plain">
+      <li>« Je suis là. »</li>
+      <li>« Celle-là est passée. »</li>
+      <li>« On respire ensemble. »</li>
+      <li>« Je te remonte le bassin. »</li>
+      <li>« Tu ouvres les genoux, je t'aide. »</li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>Ce que je porte pour deux</h3>
+    <ul class="plain">
+      <li>Le <b>projet de naissance</b> et la <b>lettre de la sage-femme</b> — je les sors dès l'arrivée.</li>
+      <li>Le <b>chronométrage</b> des contractions.</li>
+      <li>Le contact de la sage-femme et le rendez-vous à <b>J+3</b>.</li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- ================== 6. PROJET DE NAISSANCE ================== -->
+<section class="panel" id="p6" role="tabpanel" aria-labelledby="t6">
+  <p class="eyebrow">Une page · à rédiger avec la sage-femme</p>
+  <h2 class="title">Le projet de naissance</h2>
+  <p class="lede">Un document de <b>souhaits</b>, pas un contrat. On le remet à l'équipe en arrivant, avec la lettre de la sage-femme. Il évite d'avoir à expliquer quoi que ce soit au moment où on n'en a plus la disponibilité.</p>
+
+  <div class="sec">
+    <h3>Pendant le travail</h3>
+    <ul class="plain">
+      <li><b>Mobilité</b> — pouvoir marcher, utiliser le ballon, changer de position librement.</li>
+      <li><b>Ambiance</b> — lumière tamisée, notre musique, peu d'allées et venues.</li>
+      <li><b>Péridurale</b> — souhaitée ou non, et à quel moment on veut qu'on nous la propose.</li>
+      <li><b>Monitoring</b> — en discontinu si la situation le permet.</li>
+      <li><b>Le conjoint reste présent</b> en continu.</li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>Pour la poussée</h3>
+    <ul class="plain">
+      <li><b>Position souhaitée</b> — à décider avec la sage-femme, en connaissant l'intérêt de chacune.</li>
+      <li><b>Technique</b> — poussée freinée en priorité, bloquée si l'équipe l'estime nécessaire.</li>
+      <li><b>Être guidée à la voix</b>, et prévenue avant chaque geste.</li>
+      <li><b>Épisiotomie</b> — être informée et que l'accord soit demandé, sauf urgence.</li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>À la naissance</h3>
+    <ul class="plain">
+      <li><b>Peau à peau immédiat</b> et prolongé, soins du bébé décalés si possible.</li>
+      <li><b>Cordon</b> — attendre qu'il ait fini de battre. Qui le coupe.</li>
+      <li><b>Première tétée</b> en salle de naissance, ou choix du biberon.</li>
+      <li><b>Premier bain différé.</b></li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>Si césarienne</h3>
+    <ul class="plain">
+      <li><b>Présence du conjoint au bloc.</b></li>
+      <li><b>Peau à peau dès que possible</b> — par la mère, sinon par le conjoint.</li>
+      <li>Qu'on nous <b>décrive ce qui se passe</b> au fur et à mesure.</li>
+    </ul>
+  </div>
+
+  <div class="sec">
+    <h3>La forme</h3>
+    <ul class="plain">
+      <li><b>Une page maximum</b>, lisible en trente secondes par quelqu'un de pressé.</li>
+      <li>Formulé <b>en positif</b> : « nous souhaitons », plutôt qu'une liste de refus.</li>
+      <li><b>Trois exemplaires</b> dans le sac : équipe, sage-femme, nous.</li>
+      <li>Se rappeler que <b>l'équipe s'adapte à la situation médicale</b> : le projet cadre nos préférences, il ne décide pas à leur place.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Fiche construite à partir des notes de la préparation à la naissance. Les points marqués <b>+</b> sont des compléments courants, à valider avec la sage-femme avant le jour J.<br><br>
+    Le jour J, <b>c'est l'équipe médicale qui mène</b> : cette fiche sert à ne pas chercher ses mots, pas à discuter leurs consignes.<br><br>
+    Ce sont des <b>notes personnelles</b>, issues d'une préparation à la naissance précise. Chaque sage-femme a ses variantes et chaque grossesse ses particularités : à recouper avec la vôtre.
+  </footer>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(o){
+        var on = o === t;
+        o.setAttribute('aria-selected', on);
+        document.getElementById(o.getAttribute('aria-controls')).classList.toggle('on', on);
+      });
+      t.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  var edges = [0,1,2,3].map(function(i){ return document.getElementById('e'+i); });
+  var dot = document.getElementById('dot'),
+      phaseEl = document.getElementById('phase'),
+      countEl = document.getElementById('count'),
+      btn = document.getElementById('go');
+
+  var lung = document.getElementById('lung');
+  if(!btn || !dot || !lung) return;
+
+  var P = [
+    {name:'Inspire', ms:4000, from:[35,225],  to:[35,25],   r:[18,46]},
+    {name:'Retiens', ms:2000, from:[35,25],   to:[165,25],  r:[46,46]},
+    {name:'Expire',  ms:8000, from:[165,25],  to:[165,225], r:[46,18]},
+    {name:'Relâche', ms:2000, from:[165,225], to:[35,225],  r:[18,18]}
+  ];
+  var running=false, raf=null, idx=0, t0=0;
+
+  function draw(p, k){
+    dot.setAttribute('cx', p.from[0]+(p.to[0]-p.from[0])*k);
+    dot.setAttribute('cy', p.from[1]+(p.to[1]-p.from[1])*k);
+    lung.setAttribute('r', p.r[0]+(p.r[1]-p.r[0])*k);
+  }
+
+  function frame(now){
+    if(!running) return;
+    var p = P[idx], k = Math.min((now - t0)/p.ms, 1);
+    draw(p, k);
+    countEl.textContent = Math.ceil(p.ms/1000*(1-k)) + ' s';
+    if(k >= 1){
+      idx = (idx+1) % P.length; t0 = now;
+      edges.forEach(function(e,i){ e.classList.toggle('live', i===idx); });
+      phaseEl.textContent = P[idx].name;
+    }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function stop(){
+    running = false;
+    if(raf) cancelAnimationFrame(raf);
+    btn.textContent = 'Démarrer';
+    phaseEl.textContent = 'Le rectangle';
+    countEl.textContent = '4 temps · inspiration courte, expiration longue';
+    edges.forEach(function(e){ e.classList.remove('live'); });
+    idx = 0; draw(P[0], 0);
+  }
+
+  btn.addEventListener('click', function(){
+    if(running){ stop(); return; }
+    running = true;
+    btn.textContent = 'Arrêter'; idx = 0;
+    phaseEl.textContent = P[0].name;
+    edges.forEach(function(e,i){ e.classList.toggle('live', i===0); });
+    draw(P[0], 0);
+    t0 = performance.now();
+    raf = requestAnimationFrame(frame);
+  });
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden && running) stop();
+  });
+})();
+</script>
+</body>
+</html>
